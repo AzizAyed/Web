@@ -1,0 +1,89 @@
+{% extends 'backReclam.html.twig' %}
+
+{% block title %}Reponse{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Styles pour le thème noir et violet */
+        body {
+            background-color: #4a235a; /* Violet foncé pour l'arrière-plan */
+            color: #ffffff; /* Blanc pour la couleur du texte */
+            font-family: 'Arial', sans-serif; /* Police Arial ou toute autre police souhaitée */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Aligner les éléments en colonne */
+            height: 100vh; /* Assure que le contenu est centré verticalement */
+            margin: 0; /* Supprime les marges par défaut du body */
+        }
+
+        h1 {
+            color: #8a2be2; /* Violet plus clair pour la couleur du titre */
+            text-align: center; /* Centrage horizontal */
+            font-size: 36px; /* Taille du titre */
+            margin-bottom: 20px; /* Espacement en bas du titre */
+        }
+
+        /* Styles pour centrer le contenu */
+        .content-container {
+            text-align: center; /* Centrage horizontal */
+            margin: auto; /* Centrage vertical si le contenu est moins que la hauteur de l'écran */
+            width: 70%; /* Largeur du contenu */
+        }
+
+        /* Styles pour la table */
+        table {
+            margin-top: 20px; /* Espacement en haut de la table */
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ffffff; /* Bordures pour les cellules */
+            padding: 8px; /* Espacement interne */
+            text-align: center; /* Centrage horizontal pour le contenu de la table */
+            font-size: 16px; /* Taille du texte dans la table */
+        }
+
+        /* Styles pour les liens */
+        a {
+            color: #bb86fc; /* Violet clair pour la couleur du lien */
+            text-decoration: none; /* Supprimer le soulignement des liens */
+            display: inline-block; /* Affichage en bloc pour occuper seulement l'espace nécessaire */
+            margin-top: 10px; /* Espacement entre les liens */
+            font-size: 18px; /* Taille des liens */
+        }
+
+        /* Modifier les styles pour les liens au survol si nécessaire */
+        a:hover {
+            color: #ffffff; /* Blanc au survol du lien */
+            text-decoration: underline; /* Souligner le lien au survol */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="content-container">
+        <h1>La Liste Des Reponses </h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ reponse.id }}</td>
+                </tr>
+                <tr>
+                    <th>Centenu</th>
+                    <td>{{ reponse.centenu }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_reponse_index') }}">Retourner à la liste</a>
+
+        <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}">Modifier</a>
+
+        {{ include('reponse/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

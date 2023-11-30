@@ -1,0 +1,52 @@
+{% extends 'backOfficeOff.html.twig' %}
+
+{% block body %}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="card-body pt-2 mt-1">
+        <form id="formOffre" method="POST" action="{{ path('ajouter_offre') }}">
+            {{ form_start(form) }}
+            <div class="row mt-2 gy-4">
+                <div class="col-md-6">
+                    <div class="form-floating form-floating-outline">
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        <label for="{{ form.nom.vars.id }}">Nom</label>
+                        {% if form_errors(form.nom)|length > 0 %}
+                            <div class="alert alert-danger">
+                                {{ form_errors(form.nom) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating form-floating-outline">
+                        {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                        <label for="{{ form.prix.vars.id }}">Prix</label>
+                        {% if form_errors(form.prix)|length > 0 %}
+                            <div class="alert alert-danger">
+                                {{ form_errors(form.prix)|trans({'This value is not valid.': 'Le prix ne doit pas contenir de caractères alphabétiques.'}, 'validators') }}
+                            </div>
+                        {% endif %}
+                        {% dump(form.prix.vars.errors) %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating form-floating-outline">
+                        {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
+                        <label for="{{ form.duree.vars.id }}">Durée</label>
+                        {% if form_errors(form.duree)|length > 0 %}
+                            <div class="alert alert-danger">
+                                {{ form_errors(form.duree) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary me-2">Valider</button>
+                <a href="{{ path('listes_Offres') }}" class="btn btn-outline-secondary">Retour</a>
+            </div>
+            {{ form_end(form) }}
+        </form>
+    </div>
+{% endblock %}

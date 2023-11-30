@@ -1,0 +1,107 @@
+{% extends 'backReclam.html.twig' %}
+
+{% block title %}Reclamation index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/materialdesignicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/libs/node-waves/node-waves.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('css/demo.css') }}" />
+    <style>
+        /* Styles pour le thème noir et violet */
+        body {
+            background-color: #4a235a; /* Violet foncé pour l'arrière-plan */
+            color: #ffffff; /* Blanc pour la couleur du texte */
+            font-family: Arial, sans-serif; /* Changer la police si nécessaire */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Assure que le contenu est centré verticalement */
+            margin: 0; /* Supprime les marges par défaut du body */
+        }
+
+        h1 {
+            color: #8a2be2; /* Violet plus clair pour la couleur du titre */
+        }
+
+        /* Styles pour centrer le contenu */
+        .content-container {
+            text-align: center; /* Centrage horizontal */
+            margin: auto; /* Centrage vertical si le contenu est moins que la hauteur de l'écran */
+            width: 70%; /* Largeur du contenu */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ffffff; /* Bordures pour les cellules */
+            padding: 8px; /* Espacement interne */
+            text-align: center; /* Centrage horizontal pour le contenu de la table */
+        }
+
+        /* Styles pour les liens */
+        a {
+            color: #bb86fc; /* Violet clair pour la couleur du lien */
+            text-decoration: none; /* Supprimer le soulignement des liens */
+            margin-right: 10px; /* Espacement entre les liens */
+        }
+
+        /* Modifier les styles pour les liens au survol si nécessaire */
+        a:hover {
+            color: #ffffff; /* Blanc au survol du lien */
+            text-decoration: underline; /* Souligner le lien au survol */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="content-container">
+        <h1>La Liste Des Reclamations</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>Contenu</th>
+                    <th>Date</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reclamation in reclamations %}
+                    <tr>
+                        <td>{{ reclamation.id }}</td>
+                        <td>{{ reclamation.type }}</td>
+                        <td>{{ reclamation.contenu }}</td>
+                        <td>{{ reclamation.date ? reclamation.date|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">Afficher</a>
+                            <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %} 
+                 <!-- Ajoutez le bouton de téléchargement Excel ici -->
+            <div style="margin-top: 20px;">
+                <a href="{{ path('app_excel_reclam') }}" class="btn btn-primary">Télécharger Excel</a>
+            </div>
+
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_reponse_new') }}">Repondre aux reclamations</a>
+        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.min.js"></script>
+    <script src="script.js"></script>
+
+{% endblock %}

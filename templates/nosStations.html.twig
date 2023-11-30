@@ -1,0 +1,40 @@
+{% extends 'frontOffice.html.twig' %}
+
+{% block body %}
+
+
+    <!-- Map Section Start -->
+    <div class="container mt-4">
+        <div id="map" style="height: 500px;"></div>
+    </div>
+    <!-- Map Section End -->
+
+    <!-- Add Leaflet and Map Initialization Script to the Head -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Your Script Goes Here -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var mymap = L.map('map').setView([36.8065, 10.1815], 10);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mymap);
+
+            {% for station in Stations %}
+                fetch('https://nominatim.openstreetmap.org/search?format=json&q=Tunisia, {{ station.nom }}, {{ station.adresse }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            var placeCoordinates = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+                            L.marker(placeCoordinates).addTo(mymap);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching coordinates:', error);
+                    });
+            {% endfor %}
+        });
+    </script>
+{% endblock %}

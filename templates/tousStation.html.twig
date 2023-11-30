@@ -1,0 +1,40 @@
+{% extends 'backOfficeSta.html.twig' %}
+
+{% block body %}
+    <div class="container"> <!-- Add container class here -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Gestion des Station</h1>
+            <a href="/Station/ajouter" class="btn" style="background: linear-gradient(to right, #9055fd, #c2a3fe) !important; color: #fff; border: none;">
+            &#43; Ajouter Station
+            </a>
+
+
+        </div>
+
+        {% if Stations %}
+            <table id="table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nom de la station</th>
+                        <th>Adresse</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for Station in Stations %}
+                        <tr>
+                            <td>{{ Station.nom }}</td>
+                            <td>{{ Station.adresse }}</td>
+                            <td>
+                                <a href="{{ path('modifierStation', {'idStation': Station.id}) }}" class="btn btn-dark"> Modifier </a>
+                                <a href="{{ path('supprimerStation', {'idStation': Station.id}) }}" class="btn btn-danger delete-station" data-id="{{ Station.id }}">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucune station à afficher</p>
+        {% endif %}
+    </div> <!-- Close the container -->
+{% endblock %}

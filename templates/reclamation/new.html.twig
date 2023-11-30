@@ -1,0 +1,82 @@
+{% extends 'frontReclam.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        
+        body {
+            background-color: #4a235a; 
+            color: #ffffff; 
+            font-family: Arial, sans-serif; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            margin: 0; 
+        }
+
+        h1 {
+            color: #8a2be2; 
+        }
+
+        
+        a {
+            color: #bb86fc; 
+            text-decoration: none; 
+        }
+
+        
+        a:hover {
+            color: #ffffff; 
+            text-decoration: underline; 
+        }
+
+       
+        .form-container {
+            text-align: center; 
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+{% if app.session.flashBag.has('error') %}
+        <div class="alert alert-danger">
+            {{ app.session.flashBag.get('error')[0] }}
+        </div>
+    {% endif %}
+    <div>
+<div class="modal" tabindex="-1" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Votre réclamation est envoyée avec sucèes. Nous vous contacterons le plus tôt possible</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <a type="button" href="{{path('home_route')}}" class="btn btn-primary">Retour à l'accueil</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  {% if app.session.flashBag.get('success') %}
+  const myModal = new bootstrap.Modal('#myModal', {
+  keyboard: false
+}).show();
+{% endif %}
+</script>
+        <h1>Créer Votre Reclamation</h1>
+
+        <div class="form-container">
+            {{ include('reclamation/_form.html.twig') }}
+        </div>
+
+        <a href="{{ path('app_reclamation_index') }}">retourner à la liste</a>
+    </div>
+{% endblock %}
